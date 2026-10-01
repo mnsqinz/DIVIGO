@@ -1,0 +1,9 @@
+/* Misi 9: permainan tantangan waktu */
+/* ---------- Misi 9: Tantangan waktu ---------- */
+function game(){stop();let t=60,sc=0,ok=0,c,dead=[];
+const nq=()=>{const d=2+Math.floor(Math.random()*8),a=2+Math.floor(Math.random()*Math.min(8+ok,18)),o=new Set([a]);while(o.size<4)o.add(Math.max(1,a+Math.floor(Math.random()*7)-3));c={n:d*a,d,a,o:[...o].sort(()=>Math.random()-.5)};dead=[]};
+const draw=(msg)=>{M.innerHTML=`<div class=card><div class=top><span>🎮 Misi 9 · Tantangan waktu</span><span>⏱ <b id=tm>${t}</b> detik</span></div><div class=big>${c.n} ÷ ${c.d} = ?</div><div class=opts style="grid-template-columns:1fr 1fr">${c.o.map(o=>`<button class=opt data-o=${o} ${dead.includes(o)?'disabled':''}>${o}</button>`).join('')}</div><div id=fb class=fb role=status aria-live=polite>${msg||''}</div><p class=sm>Skor: ${sc} · Jawaban benar: ${ok}. Tidak ada pengurangan skor, ayo terus mencoba!</p></div>`;
+M.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const o=+b.dataset.o;if(o===c.a){Snd.ok();sc+=10;ok++;nq();draw('<div class=g>🎉 Hebat!</div>')}else{Snd.retry();dead.push(o);draw('<div>⭐ Kamu semakin dekat! Satu langkah lagi!</div>')}})};
+Divi.say('happy','Ayo jawab secepat yang kamu bisa!');nq();draw();
+gt=setInterval(()=>{t--;const e=$('#tm');if(e)e.textContent=t;if(t<=0){stop();Snd.win();Divi.say('cheer','Waktu habis, kamu hebat!');const s=ok>=8?3:ok>=4?2:1;S.done[9]=Math.max(S.done[9]||0,s);save();M.innerHTML=`<div class="card hero"><div class=mas>🏆</div><h2>Waktu habis! Kamu hebat!</h2><div class=big>${'⭐'.repeat(s)}</div><p>Kamu menjawab <b>${ok}</b> soal dengan benar. Setiap percobaan membuatmu semakin memahami pembagian.</p><div class=row style="justify-content:center"><button class=btn id=m>🗺️ Peta Misi</button><button class="btn s" id=ag>🔁 Main lagi</button></div></div>`;$('#m').onclick=map;$('#ag').onclick=game}},1000)}
+

@@ -1,0 +1,1 @@
+Efek suara dibuat oleh js/suara.js (WebAudio). Jika ingin memakai file audio sendiri (mp3/ogg), taruh di folder ini lalu panggil dari js/suara.js.
